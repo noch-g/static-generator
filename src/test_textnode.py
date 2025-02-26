@@ -10,7 +10,7 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(node, node2)
 
         self.assertEqual(node.text_type, TextType.BOLD)
-        self.assertEqual(node.url, None)
+        self.assertEqual(node.url, "")
 
     def test_eq_false(self):
         node = TextNode("This is a text node", TextType.TEXT)
