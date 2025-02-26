@@ -5,7 +5,7 @@ class HTMLNode():
         self.children = children
         self.props = props
 
-    def to_html(self) -> None:
+    def to_html(self) -> str:
         raise NotImplementedError
     
     def props_to_html(self) -> str:
@@ -35,7 +35,7 @@ class ParentNode(HTMLNode):
         return s
 
 class LeafNode(HTMLNode):
-    def __init__(self, tag: str, value: str, props: dict[str, str] | None = None):
+    def __init__(self, tag: str | None, value: str, props: dict[str, str] | None = None):
         super().__init__(tag, value, None, props)
 
     def to_html(self) -> str:
