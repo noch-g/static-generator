@@ -71,6 +71,18 @@ class TestParentNode(unittest.TestCase):
             parent_node.to_html(),
             "<div><span><b>grandchild</b></span></div>",
         )
+    
+    def test_siblings_with_kids(self):
+        grandchild1 = LeafNode("b", "Image 1")
+        grandchild2 = LeafNode("i", "image link")
+        grandchild3 = LeafNode(None, "Hello, world!")
+        child_node1 = ParentNode("span", [grandchild1, grandchild2])
+        child_node2 = ParentNode("p", [grandchild3])
+        parent_node = ParentNode("div", [child_node1, child_node2])
+        self.assertEqual(
+            parent_node.to_html(),
+            "<div><span><b>Image 1</b><i>image link</i></span><p>Hello, world!</p></div>",
+        )
 
 if __name__ == "__main__":
     unittest.main()
