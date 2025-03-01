@@ -66,7 +66,7 @@ def code_to_html_node(block: str) -> ParentNode:
     return ParentNode("pre", [text_node_to_html_node(text_node)])
 
 def quote_to_html_node(block: str) -> ParentNode:
-    text = " ".join([line[1:].strip() for line in block.split("\n") if line[1:].strip() != ""])
+    text = " ".join([line[1:].strip() for line in block.split("\n")])
     return ParentNode("blockquote", text_to_children(text))
 
 def ulist_to_html_node(block: str) -> ParentNode:
