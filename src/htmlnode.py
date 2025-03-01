@@ -8,6 +8,11 @@ class HTMLNode():
     def to_html(self) -> str:
         raise NotImplementedError
     
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, HTMLNode):
+            return NotImplementedError
+        return self.tag == other.tag and self.value == other.value and self.children == other.children and self.props == other.props
+
     def props_to_html(self) -> str:
         if not self.props:
             return ""
