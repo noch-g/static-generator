@@ -62,11 +62,11 @@ def heading_to_html_node(block: str) -> ParentNode:
     return ParentNode(f"h{ix}", children)
 
 def code_to_html_node(block: str) -> ParentNode:
-    text_node = TextNode(block[3:-3], TextType.CODE)
+    text_node = TextNode(block[3:-3].removeprefix("\n"), TextType.CODE)
     return ParentNode("pre", [text_node_to_html_node(text_node)])
 
 def quote_to_html_node(block: str) -> ParentNode:
-    text = "\n".join([line[1:] for line in block.split("\n")])
+    text = " ".join([line[1:].strip() for line in block.split("\n") if line[1:].strip() != ""])
     return ParentNode("blockquote", text_to_children(text))
 
 def ulist_to_html_node(block: str) -> ParentNode:
