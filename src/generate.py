@@ -3,16 +3,16 @@ import shutil
 
 from block_markdown import markdown_to_html_node
 
-def generate_pages_recursive(dir_path_content: str, template_path: str, dest_dir_path:str) -> None:
-    generate_page(dir_path_content, template_path, dest_dir_path)
+def generate_pages_recursive(dir_path_content: str, template_path: str, dest_dir_path: str, basepath: str) -> None:
+    generate_page(dir_path_content, template_path, dest_dir_path, basepath)
     for dir in os.listdir(dir_path_content):
         if not os.path.isfile(os.path.join(dir_path_content, dir)):
             if not os.path.exists(os.path.join(dest_dir_path, dir)):
                 os.mkdir(os.path.join(dest_dir_path, dir))
-            generate_pages_recursive(os.path.join(dir_path_content, dir), template_path, os.path.join(dest_dir_path, dir))
+            generate_pages_recursive(os.path.join(dir_path_content, dir), template_path, os.path.join(dest_dir_path, dir), basepath)
         
 
-def generate_page(from_path: str, template_path: str, dest_path: str):
+def generate_page(from_path: str, template_path: str, dest_path: str, basepath: str):
     md_file = os.path.join(from_path, "index.md")
     if not os.path.exists(md_file):
         print(f"no index.md found in {md_file}")
@@ -28,6 +28,8 @@ def generate_page(from_path: str, template_path: str, dest_path: str):
 
     template = template.replace("{{ Title }}", title)
     template = template.replace("{{ Content }}", doc_str)
+    template = template.replace('href="/', f'href="{basepath}')
+    template = template.replace('src="/', f'src="{basepath}')
     
     if not os.path.exists(dest_path):
         os.mkdir(dest_path)
