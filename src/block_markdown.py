@@ -23,7 +23,7 @@ def markdown_to_blocks(text: str) -> list[str]:
     return blocks
 
 def markdown_to_html_node(markdown: str) -> HTMLNode:
-    children = []
+    children: list[HTMLNode] = []
     blocks = markdown_to_blocks(markdown)
     for block in blocks:
         block_type = block_to_block_type(block)
@@ -42,8 +42,8 @@ def markdown_to_html_node(markdown: str) -> HTMLNode:
 
     return ParentNode("div", children=children)
 
-def text_to_children(text: str) -> list[LeafNode]:
-    children = []
+def text_to_children(text: str) -> list[HTMLNode]:
+    children: list[HTMLNode]= []
     text_nodes = text_to_textnodes(text)
     for text_node in text_nodes:
         children.append(text_node_to_html_node(text_node))
@@ -70,13 +70,13 @@ def quote_to_html_node(block: str) -> ParentNode:
     return ParentNode("blockquote", text_to_children(text))
 
 def ulist_to_html_node(block: str) -> ParentNode:
-    children = []
+    children: list[HTMLNode] = []
     for line in block.split("\n"):
         children.append(ParentNode("li", text_to_children(line[2:])))
     return ParentNode("ul", children)
 
 def olist_to_html_node(block: str) -> ParentNode:
-    children = []
+    children: list[HTMLNode] = []
     for line in block.split("\n"):
         children.append(ParentNode("li", text_to_children(line[3:])))
     return ParentNode("ol", children)

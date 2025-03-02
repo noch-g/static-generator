@@ -7,10 +7,10 @@ class HTMLNode():
 
     def to_html(self) -> str:
         raise NotImplementedError
-    
+
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, HTMLNode):
-            return NotImplementedError
+            raise NotImplementedError
         return self.tag == other.tag and self.value == other.value and self.children == other.children and self.props == other.props
 
     def props_to_html(self) -> str:
@@ -25,7 +25,7 @@ class HTMLNode():
         return f"HTMLNode({self.tag}, {self.value}, children: {self.children}, {self.props})"
 
 class ParentNode(HTMLNode):
-    def __init__(self, tag: str, children: list["HTMLNode"], props: dict[str, str] | None = None):
+    def __init__(self, tag: str, children: list[HTMLNode], props: dict[str, str] | None = None):
         super().__init__(tag, None, children, props)
     
     def to_html(self) -> str:

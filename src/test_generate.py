@@ -4,7 +4,7 @@ import textwrap
 from generate import extract_title
 
 class TestGeneratePage(unittest.TestCase):
-    def test_extract_title(self):
+    def test_extract_title(self) -> None:
         md = "#  Title "
         self.assertEqual(extract_title(md), "Title")
         md = textwrap.dedent("""\

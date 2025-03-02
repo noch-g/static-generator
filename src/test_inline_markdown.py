@@ -5,7 +5,7 @@ from inline_markdown import split_nodes_delimiter, extract_markdown_images, extr
 
 
 class TestTextToTexNodes(unittest.TestCase):
-    def test_single(self):
+    def test_single(self) -> None:
         text = "This is **text** with an _italic_ word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
         self.assertEqual(
             text_to_textnodes(text),
@@ -24,14 +24,14 @@ class TestTextToTexNodes(unittest.TestCase):
         )
 
 class TestMarkdown(unittest.TestCase):
-    def test_extract_markdown_image(self):
+    def test_extract_markdown_image(self) -> None:
         text = "This is text with a ![rick roll](https://i.imgur.com/aKaOqIh.gif) and ![obi wan](https://i.imgur.com/fJRm4Vk.jpeg)"
         self.assertListEqual(
             extract_markdown_images(text),
             [("rick roll", "https://i.imgur.com/aKaOqIh.gif"), ("obi wan", "https://i.imgur.com/fJRm4Vk.jpeg")],
         )
 
-    def test_extract_markdown_link(self):
+    def test_extract_markdown_link(self) -> None:
         text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
         self.assertListEqual(
             extract_markdown_links(text),
@@ -39,7 +39,7 @@ class TestMarkdown(unittest.TestCase):
         )
 
 class TestSplitImage(unittest.TestCase):
-    def test_split_images(self):
+    def test_split_images(self) -> None:
         node = TextNode(
             "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
             TextType.TEXT,
@@ -57,7 +57,7 @@ class TestSplitImage(unittest.TestCase):
             new_nodes,
         )
 
-    def test_split_image(self):
+    def test_split_image(self) -> None:
         node = TextNode(
             "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)",
             TextType.TEXT,
@@ -71,7 +71,7 @@ class TestSplitImage(unittest.TestCase):
             new_nodes,
         )
 
-    def test_split_image_single(self):
+    def test_split_image_single(self) -> None:
         node = TextNode(
             "![image](https://www.example.COM/IMAGE.PNG)",
             TextType.TEXT,
@@ -85,7 +85,7 @@ class TestSplitImage(unittest.TestCase):
         )
 
 class TestSplitLink(unittest.TestCase):
-    def test_split_link(self):
+    def test_split_link(self) -> None:
         node = TextNode(
             "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)",
             TextType.TEXT,
@@ -101,7 +101,7 @@ class TestSplitLink(unittest.TestCase):
             new_nodes,
         )
     
-    def test_split_links(self):
+    def test_split_links(self) -> None:
         node = TextNode(
             "This is text with a [link](https://boot.dev) and [another link](https://blog.boot.dev) with text that follows",
             TextType.TEXT,
@@ -119,7 +119,7 @@ class TestSplitLink(unittest.TestCase):
         )
 
 class TestSplitNodesDelimiter(unittest.TestCase):
-    def test_simple_split(self):
+    def test_simple_split(self) -> None:
         node = TextNode("Command: `hello` world", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node], "`", TextType.CODE)
         self.assertEqual(
@@ -127,7 +127,7 @@ class TestSplitNodesDelimiter(unittest.TestCase):
              [TextNode("Command: ", TextType.TEXT), TextNode("hello", TextType.CODE), TextNode(" world", TextType.TEXT)]
         )
 
-    def test_delim_bold_and_italic(self):
+    def test_delim_bold_and_italic(self) -> None:
         node = TextNode("**bold** and _italic_", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
         new_nodes = split_nodes_delimiter(new_nodes, "_", TextType.ITALIC)
@@ -140,7 +140,7 @@ class TestSplitNodesDelimiter(unittest.TestCase):
             new_nodes,
         )
 
-    def test_more_splits(self):
+    def test_more_splits(self) -> None:
         node = TextNode("**Now** is **the** time for **action**", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
         self.assertEqual(
@@ -154,7 +154,7 @@ class TestSplitNodesDelimiter(unittest.TestCase):
             ]
         )
 
-    def test_several_nodes(self):
+    def test_several_nodes(self) -> None:
         node = TextNode("**Now** is the time", TextType.TEXT)
         node2 = TextNode("for **action**", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node, node2], "**", TextType.BOLD)

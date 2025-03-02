@@ -12,7 +12,7 @@ def generate_pages_recursive(dir_path_content: str, template_path: str, dest_dir
             generate_pages_recursive(os.path.join(dir_path_content, dir), template_path, os.path.join(dest_dir_path, dir), basepath)
         
 
-def generate_page(from_path: str, template_path: str, dest_path: str, basepath: str):
+def generate_page(from_path: str, template_path: str, dest_path: str, basepath: str) -> None:
     md_file = os.path.join(from_path, "index.md")
     if not os.path.exists(md_file):
         print(f"no index.md found in {md_file}")
@@ -37,7 +37,7 @@ def generate_page(from_path: str, template_path: str, dest_path: str, basepath: 
         f.write(template)
 
 
-def extract_title(markdown: str)-> None:
+def extract_title(markdown: str)-> str:
     for line in markdown.split("\n"):
         if line.startswith("# "):
             return line[2:].strip()
